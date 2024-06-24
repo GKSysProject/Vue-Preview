@@ -93,7 +93,7 @@ export default {
   justify-content: flex-start;
   align-items: center;
   position: fixed;
-  right: 50px;
+  right: 150px;
   top: 100px;
   width: 250px;
   height: 80%;
@@ -106,7 +106,7 @@ export default {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.schools > ul {
+.schools>ul {
   list-style-type: none;
   padding: 0;
   margin-top: 10px;
@@ -114,7 +114,7 @@ export default {
   overflow: scroll;
 }
 
-.schools > ul > li {
+.schools>ul>li {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -126,14 +126,15 @@ export default {
   transition: all 0.3s ease-in-out;
   overflow: hidden;
   height: auto;
-  position: relative; /* Added to position the info box */
+  position: relative;
+  /* Added to position the info box */
 }
 
-.schools > ul > li:last-child {
+.schools>ul>li:last-child {
   border-bottom: none;
 }
 
-.schools > ul > li:hover {
+.schools>ul>li:hover {
   align-items: flex-start;
   background: rgba(243, 243, 243, 0.95);
   border-radius: 5px;
@@ -159,7 +160,7 @@ export default {
   border-radius: 5px;
 }
 
-.schools > ul > li:hover .school-info {
+.schools>ul>li:hover .school-info {
   display: block;
 }
 
@@ -169,16 +170,16 @@ export default {
   margin-bottom: 10px;
 }
 
-.schools > ul::-webkit-scrollbar {
+.schools>ul::-webkit-scrollbar {
   width: 10px;
 }
 
-.schools > ul::-webkit-scrollbar-track {
+.schools>ul::-webkit-scrollbar-track {
   background: #f1f1f1;
   border-radius: 5px;
 }
 
-.schools > ul::-webkit-scrollbar-thumb {
+.schools>ul::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 5px;
 }

@@ -19,7 +19,6 @@
 
 <script>
 export default {
-  name: "AppNavigation",
   data() {
     return {
       years: [2020, 2021, 2022, 2023],

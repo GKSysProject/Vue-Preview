@@ -1,22 +1,22 @@
 <template>
   <div id="app">
-    <Header />
-    <Main />
-    <SchoolList />
+    <HomeView />
+    <!-- <Header />
+    <RankingView />
+    <SchoolList /> -->
   </div>
 </template>
 
 <script>
-import Header from "./components/AppHeader.vue";
-import Main from "./components/AppMain.vue";
-import SchoolList from "./components/SchoolList.vue";
+import HomeView from './components/HomeView.vue'
 
 export default {
   name: "App",
   components: {
-    Header,
-    Main,
-    SchoolList,
+    HomeView
+    // Header,
+    // RankingView,
+    // SchoolList,
   },
 };
 </script>
