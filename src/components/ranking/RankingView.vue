@@ -23,7 +23,7 @@
     },
     mounted() {
       this.initChart();
-      this.fetchChartData(2020); // Initial fetch for the default year
+      this.fetchChartData(2020);
     },
     methods: {
       initChart() {
@@ -31,7 +31,7 @@
       },
       async fetchChartData(year) {
         try {
-          const response = await fetch(`http://localhost:3080/test?y=${year}`);
+          const response = await fetch(`${this.$config.serverUrl}/year?y=${year}`);
           const data = await response.json();
           this.updateChart(data);
         } catch (error) {

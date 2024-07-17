@@ -4,7 +4,7 @@
             <li class="mb-list" :class="{ active: activeIndex === 0 }" data-color="#fe4d4d" @mouseenter="setActive(0)">
                 <a href="#">
                     <span class="mb-icon">
-                        <i class="fa-solid fa-message"></i>
+                        <i class="fa-solid"></i>
                     </span>
                     <span class="mb-title">Chat</span>
                 </a>
@@ -12,7 +12,7 @@
             <li class="mb-list" :class="{ active: activeIndex === 1 }" data-color="#4bffc9" @mouseenter="setActive(1)">
                 <a href="#">
                     <span class="mb-icon">
-                        <i class="fa-solid fa-user-group"></i>
+                        <i class="fa-solid"></i>
                     </span>
                     <span class="mb-title">Group</span>
                 </a>
@@ -20,7 +20,7 @@
             <li class="mb-list" :class="{ active: activeIndex === 2 }" data-color="#34e0ff" @mouseenter="setActive(2)">
                 <a href="#">
                     <span class="mb-icon">
-                        <i class="fa-solid fa-bell"></i>
+                        <i class="fa-solid"></i>
                     </span>
                     <span class="mb-title">Notification</span>
                 </a>
@@ -28,7 +28,7 @@
             <li class="mb-list" :class="{ active: activeIndex === 3 }" data-color="#c480ff" @mouseenter="setActive(3)">
                 <a href="#">
                     <span class="mb-icon">
-                        <i class="fa-solid fa-circle-chevron-down"></i>
+                        <i class="fa-solid"></i>
                     </span>
                     <span class="mb-title">More</span>
                 </a>
@@ -42,18 +42,18 @@
         <!-- 根据 activeIndex 显示不同的内容 -->
         <Header v-if="activeIndex === 0" />
         <RankingView v-if="activeIndex === 0" />
-        <SchoolList v-if="activeIndex === 0" />
+        <SchoolList v-if="activeIndex === 0 && showSchoolList"/>
 
         <div v-if="activeIndex === 1">
-            <p>Content for Group</p>
+            <Header v-if="activeIndex === 1" />
         </div>
 
         <div v-if="activeIndex === 2">
-            <p>Content for Notification</p>
+            <Header v-if="activeIndex === 2" />
         </div>
 
         <div v-if="activeIndex === 3">
-            <p>Content for More</p>
+
         </div>
     </div>
 </template>
@@ -68,9 +68,10 @@ export default {
     components: {
         Header,
         RankingView,
-        SchoolList
+        SchoolList,
     },
     mounted() {
+        this.checkToken()
         let mb_list = document.querySelectorAll('.mb-list');
 
         mb_list.forEach(element => {
@@ -84,22 +85,46 @@ export default {
                 document.body.style.backgroundColor = color;
             });
         });
+
+        window.addEventListener('resize', this.checkWindowSize);
     },
+
+    beforeUnmount() {
+            window.removeEventListener('resize', this.checkWindowSize);
+    },
+
     data() {
         return {
             menuItems: [
-                { title: 'Chat', iconClass: 'fa-message', color: '#fe4d4d' },
-                { title: 'Group', iconClass: 'fa-user-group', color: '#4bffc9' },
-                { title: 'Notification', iconClass: 'fa-bell', color: '#34e0ff' },
-                { title: 'More', iconClass: 'fa-circle-chevron-down', color: '#c480ff' }
+                { title: 'Home', color: '#fe4d4d' },
+                { title: 'Page', color: '#4bffc9' },
+                { title: 'Page', color: '#34e0ff' },
+                { title: 'Page', color: '#c480ff' }
             ],
-            activeIndex: 0
+            activeIndex: 0,
+            showSchoolList: window.innerWidth >= 1520,
         };
     },
     methods: {
+        updateSuggestions(suggestions) {
+            this.suggestions = suggestions;
+        },
+
+        checkWindowSize() {
+            this.showSchoolList = window.innerWidth >= 1520;
+        },
+
         setActive(index) {
             this.activeIndex = index;
-        }
+        },
+
+        checkToken() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                this.$router.push('/login');
+            }
+        }   
+        
     }
 };
 </script>

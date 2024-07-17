@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <HomeView />
+    <router-view />
+    <!-- <HomeView /> -->
     <!-- <Header />
     <RankingView />
     <SchoolList /> -->
@@ -8,19 +9,17 @@
 </template>
 
 <script>
-import HomeView from './components/HomeView.vue'
+
 
 export default {
   name: "App",
-  components: {
-    HomeView
-    // Header,
-    // RankingView,
-    // SchoolList,
-  },
+  
 };
 </script>
 
 <style>
-/* Add your global styles here */
+body {
+  background-color: #fe4d4d;
+}
+
 </style>

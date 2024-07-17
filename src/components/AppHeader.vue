@@ -1,15 +1,18 @@
 <template>
   <header>
     <img src="/public/static/logo.JPG" id="logo" />
-    <div class="input-container">
-      <input type="text" placeholder="搜索学校或专业…" />
-    </div>
+    <SearchSchool />
   </header>
 </template>
 
 <script>
+import SearchSchool from './search/SearchSchool.vue';
+
 export default {
   name: "AppHeader",
+  components: {
+    SearchSchool
+  }
 };
 </script>
 
@@ -38,12 +41,13 @@ header {
   background: rgba(243, 243, 243, 0.95);
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  z-index: 7;
 }
 
-header > .input-container {
+/* header > .input-container {
   flex: 1;
   display: flex;
-  justify-content: center;
+  justify-content: center; 
 }
 
 header > .input-container > input {
@@ -63,5 +67,5 @@ header > .input-container > input:focus {
   border-color: #007bff;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
   border-radius: 10px;
-}
+} */
 </style>
