@@ -108,7 +108,8 @@ export default {
   height: 30px;
   border-radius: 10px;
   transition: 0.5s;
-  bottom: 15px;
+  margin-top: 20px;
+  /* bottom: 15px; */
 }
 
 .navi > ul > li:nth-child(1).active ~ .indicator {

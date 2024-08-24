@@ -3,7 +3,7 @@
     <div class="search-school">
       <input type="text" v-model="query" @input="search" placeholder="搜索学校..." />
       <ul v-if="suggestions.length">
-        <li v-for="suggestion in suggestions" :key="suggestion">{{ suggestion }}</li>
+        <li v-for="suggestion in suggestions" :key="suggestion"><a href="">{{ suggestion }}</a></li>
       </ul>
     </div>
   </template>

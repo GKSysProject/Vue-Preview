@@ -1,6 +1,6 @@
 <template>
   <header>
-    <img src="/public/static/logo.JPG" id="logo" />
+    <img src="@/assets/logo.png" id="logo" />
     <SearchSchool />
   </header>
 </template>

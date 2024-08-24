@@ -1,73 +1,91 @@
 <template>
-    <div class="main">
-      <div class="main-table">
-        <div ref="chart" style="width: 600px; height: 400px"></div>
-        <!-- Use the AppNavigation component -->
-        <AppNavigation @yearSelected="onYearSelected" />
+  <div class="main">
+    <div class="main-table">
+      <div class="select-wrapper">
+        <select v-model="selectedChart" @change="onChartSelected" class="custom-select">
+          <option value="scoreDistribution">一分一段表</option>
+          <option value="admissionPlan">招生计划表</option>
+        </select>
       </div>
+      <div ref="chart" style="width: 600px; height: 400px"></div>
+      <!-- Use the AppNavigation component -->
+      <AppNavigation @yearSelected="onYearSelected" />
+      <SchoolMap />
     </div>
-  </template>
-  
-  <script>
-  import * as echarts from "echarts";
-  import AppNavigation from "./AppNavigation.vue";
-  
-  export default {
-    components: {
-      AppNavigation,
+  </div>
+</template>
+
+<script>
+import * as echarts from "echarts";
+import AppNavigation from "./AppNavigation.vue";
+import SchoolMap from "../SchoolMap.vue";
+
+export default {
+  components: {
+    AppNavigation,
+    SchoolMap
+  },
+  data() {
+    return {
+      chart: null,
+      selectedChart: 'scoreDistribution', // Default chart
+    };
+  },
+  mounted() {
+    this.initChart();
+    this.fetchChartData(2020);
+  },
+  methods: {
+    initChart() {
+      this.chart = echarts.init(this.$refs.chart);
     },
-    data() {
-      return {
-        chart: null,
+    async fetchChartData(year) {
+      try {
+        const response = await fetch(`${this.$config.serverUrl}/api/year?y=${year}&chart=${this.selectedChart}`);
+        const data = await response.json();
+        this.updateChart(data);
+      } catch (error) {
+        console.error("Error fetching chart data:", error);
+      }
+    },
+    updateChart(data) {
+      const option = {
+        title: {
+          text: this.selectedChart === 'scoreDistribution' ? "历年高考一分一段表" : "招生计划表",
+        },
+        tooltip: {
+          trigger: "axis",
+        },
+        xAxis: {
+          type: "category",
+          data: data.xAxis,
+        },
+        yAxis: {
+          type: "value",
+        },
+        series: [
+          {
+            data: data.series,
+            type: "line",
+            smooth: true,
+            label: {
+              show: true
+            }
+          },
+        ],
       };
+      this.chart.setOption(option);
     },
-    mounted() {
-      this.initChart();
-      this.fetchChartData(2020);
+    onYearSelected(year) {
+      this.fetchChartData(year);
     },
-    methods: {
-      initChart() {
-        this.chart = echarts.init(this.$refs.chart);
-      },
-      async fetchChartData(year) {
-        try {
-          const response = await fetch(`${this.$config.serverUrl}/year?y=${year}`);
-          const data = await response.json();
-          this.updateChart(data);
-        } catch (error) {
-          console.error("Error fetching chart data:", error);
-        }
-      },
-      updateChart(data) {
-        const option = {
-          title: {
-            text: "历年高考一分一段表",
-          },
-          tooltip: {
-            trigger: "axis",
-          },
-          xAxis: {
-            type: "category",
-            data: data.xAxis,
-          },
-          yAxis: {
-            type: "value",
-          },
-          series: [
-            {
-              data: data.series,
-              type: "line",
-            },
-          ],
-        };
-        this.chart.setOption(option);
-      },
-      onYearSelected(year) {
-        this.fetchChartData(year);
-      },
+    onChartSelected() {
+      this.fetchChartData(new Date().getFullYear()); // Fetch data for the current year
     },
-  };
-  </script>
+  },
+};
+</script>
+
   
   <style scoped>
   .main {
@@ -78,7 +96,7 @@
     flex-direction: row;
     justify-content: flex-start;
     width: 70%;
-    height: 400px;
+    min-height: 400px;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: #f9f9f9;
@@ -92,7 +110,7 @@
     align-items: center;
     min-width: 600px;
     width: 80%;
-    height: 400px;
+    min-height: 400px;
     border-radius: 5px; 
     overflow: hidden; 
     background-color: #ffffff; 
@@ -125,5 +143,35 @@
     font-size: 20px; 
     color: #007bff;
   }
+
+  .select-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.custom-select {
+  appearance: none;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.custom-select:focus {
+  border-color: #66afe9;
+  outline: none;
+  box-shadow: 0 0 5px rgba(102, 175, 233, 0.6);
+}
+
+.custom-select::after {
+  content: '▼';
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
   </style>
   

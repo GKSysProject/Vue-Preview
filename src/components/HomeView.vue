@@ -61,7 +61,7 @@
 <script>
 import Header from './AppHeader.vue'
 import { RankingView } from './index'
-import SchoolList from "./SchoolList.vue";
+import SchoolList from "./SchoolList.vue"
 
 export default {
     name: 'HomeView',
